@@ -1,4 +1,7 @@
+azure-functions
 azqueuetweeter
 gh-issues
 python-dotenv
+spacy
+strip-markdown
 typer
