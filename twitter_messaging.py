@@ -16,27 +16,22 @@ Storage = storage.Auth(
 )
 
 Twitter = twitter.Auth(
-    consumer_key='CONSUMER-KEY',
-    consumer_secret='CONSUMER-SECRET',
-    access_token='ACCOUNT-ACCESS-TOKEN',
-    access_token_secret='ACCOUNT-ACCESS-TOKEN-SECRET',
+    consumer_key=os.environ.get('CONSUMER-KEY'),
+    consumer_secret=os.environ.get('CONSUMER-SECRET'),
+    access_token=os.environ.get('ACCOUNT-ACCESS-TOKEN'),
+    access_token_secret=os.environ.get('ACCOUNT-ACCESS-TOKEN-SECRET'),
 )
 
 
-def queue_tweet(qt, issue):
-    qt = QueueTweeter(Storage, Twitter)
-    return qt.queue_message(issue.social)
 
 
-def main(owner:str, repo:str, issue_number:int):
+def main(qt, issue_number:int):
     _repo = Repo(owner, repo)
     issues = Issue(_repo, issue_number)
 
     for issue in issues.get_content_issues('topics'):
-        .
+        queue_tweet(QueueTweeter(Storage, Twitter), issue)    
 
 if __name__ == "__main__":
+     qt = QueueTweeter(Storage, Twitter)
     typer.run(main)
-
-
-
